@@ -1,24 +1,44 @@
-//
-//  ContentView.swift
-//  GameDay
-//
-//  Created by Ryan Kaya on 2/22/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @StateObject private var viewModel = GameDayViewModel()
 
-#Preview {
-    ContentView()
+    var body: some View {
+        TabView {
+            NavigationStack {
+                DashboardView()
+            }
+            .tabItem {
+                Label("Home", systemImage: "gauge")
+            }
+
+            NavigationStack {
+                InputsView()
+            }
+            .tabItem {
+                Label("Metrics", systemImage: "slider.horizontal.3")
+            }
+
+            NavigationStack {
+                CoachPlanView()
+            }
+            .tabItem {
+                Label("Plan", systemImage: "sparkles")
+            }
+
+            NavigationStack {
+                CoachChatView()
+            }
+            .tabItem {
+                Label("Chat", systemImage: "message.badge.waveform")
+            }
+        }
+        .tint(GameDayPalette.accent)
+        .toolbarBackground(.thinMaterial, for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
+        .environmentObject(viewModel)
+        .task {
+            await viewModel.evaluate()
+        }
+    }
 }

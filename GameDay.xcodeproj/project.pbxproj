@@ -41,8 +41,6 @@
 		3CE4C6132F4B2DFF00796182 /* GameDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GameDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE4C6152F4B2DFF00796182 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		3CE4C6172F4B2DFF00796182 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		3CE4C6302F4B301800796182 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		3CE4C6312F4B301800796182 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -67,6 +65,11 @@
 				3CE4C62A2F4B2E0100796182 /* Exceptions for "GameDayWidget" folder in "GameDayWidgetExtension" target */,
 			);
 			path = GameDayWidget;
+			sourceTree = "<group>";
+		};
+		3CE4C62F2F4B301300796182 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -118,15 +121,6 @@
 				3CE4C6172F4B2DFF00796182 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3CE4C62F2F4B301300796182 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				3CE4C6302F4B301800796182 /* Models.swift */,
-				3CE4C6312F4B301800796182 /* ReadinessEngine.swift */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,11 +381,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GameDay/GameDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N3X2H33TR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "GameDay Live uses Health data to estimate sleep, hydration, and recovery readiness.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "GameDay Live uses your microphone for voice chat with Coach AI.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "GameDay Live converts your speech to text for hands-free coach chat.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -419,11 +418,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GameDay/GameDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N3X2H33TR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "GameDay Live uses Health data to estimate sleep, hydration, and recovery readiness.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "GameDay Live uses your microphone for voice chat with Coach AI.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "GameDay Live converts your speech to text for hands-free coach chat.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

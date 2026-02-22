@@ -12,7 +12,6 @@ import SwiftUI
 struct GameDayWidgetBundle: WidgetBundle {
     var body: some Widget {
         GameDayWidget()
-        GameDayWidgetControl()
         GameDayWidgetLiveActivity()
     }
 }

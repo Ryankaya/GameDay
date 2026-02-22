@@ -1,26 +1,46 @@
 import Foundation
 
 struct ReadinessEngine {
+    struct Weights {
+        var sleep: Double = 30
+        var soreness: Double = 20
+        var stress: Double = 20
+        var hydration: Double = 15
+        var trainingIntensity: Double = 10
+        var kickoffUrgency: Double = 5
+    }
+
+    private let weights: Weights
+
+    init(weights: Weights = Weights()) {
+        self.weights = weights
+    }
+
     func compute(game: Game, metrics: AthleteMetrics) -> ReadinessResult {
-        let sleepScore = clamp(metrics.sleepHours / 9.0, min: 0.0, max: 1.0) * 25.0
-        let sorenessScore = (1.0 - normalizeInt(metrics.soreness, max: 10)) * 20.0
-        let stressScore = (1.0 - normalizeInt(metrics.stress, max: 10)) * 20.0
-        let hydrationScore = clamp(metrics.hydrationOz / 100.0, min: 0.0, max: 1.0) * 15.0
-        let intensityPenalty = normalizeInt(metrics.trainingIntensity, max: 10) * 20.0
+        let sleepValue = clamp(metrics.sleepHours / 9.0, min: 0.0, max: 1.0)
+        let sorenessValue = 1.0 - normalizeScale10(metrics.soreness)
+        let stressValue = 1.0 - normalizeScale10(metrics.stress)
+        let hydrationValue = clamp(metrics.hydrationOz / 100.0, min: 0.0, max: 1.0)
+        let intensityValue = 1.0 - normalizeScale10(metrics.trainingIntensity)
+        let urgencyValue = kickoffReadinessFactor(kickoffTime: game.kickoffTime)
 
-        let rawScore = sleepScore + sorenessScore + stressScore + hydrationScore - intensityPenalty
+        let contributions: [(String, Double)] = [
+            ("Sleep quality", sleepValue * weights.sleep),
+            ("Soreness load", sorenessValue * weights.soreness),
+            ("Stress load", stressValue * weights.stress),
+            ("Hydration level", hydrationValue * weights.hydration),
+            ("Training intensity", intensityValue * weights.trainingIntensity),
+            ("Time to kickoff", urgencyValue * weights.kickoffUrgency)
+        ]
+
+        let rawScore = contributions.map(\.1).reduce(0.0, +)
         let score = Int(round(clamp(rawScore, min: 0.0, max: 100.0)))
-        let label = readinessLabel(for: score)
-        let topFactors = computeTopFactors(
-            sleepHours: metrics.sleepHours,
-            soreness: metrics.soreness,
-            stress: metrics.stress,
-            hydrationOz: metrics.hydrationOz,
-            trainingIntensity: metrics.trainingIntensity,
-            kickoffTime: game.kickoffTime
-        )
 
-        return ReadinessResult(score: score, label: label, topFactors: topFactors)
+        return ReadinessResult(
+            score: score,
+            label: readinessLabel(for: score),
+            topFactors: topFactors(from: contributions)
+        )
     }
 }
 
@@ -37,39 +57,29 @@ private func readinessLabel(for score: Int) -> String {
     }
 }
 
-private func computeTopFactors(
-    sleepHours: Double,
-    soreness: Int,
-    stress: Int,
-    hydrationOz: Double,
-    trainingIntensity: Int,
-    kickoffTime: Date
-) -> [String] {
-    var factors: [(String, Double)] = []
-
-    let sleepDeficit = max(0.0, 8.0 - sleepHours)
-    factors.append(("Sleep below 8h", sleepDeficit))
-
-    factors.append(("Soreness level", Double(soreness)))
-    factors.append(("Stress level", Double(stress)))
-
-    let hydrationDeficit = max(0.0, 80.0 - hydrationOz)
-    factors.append(("Hydration below 80oz", hydrationDeficit / 10.0))
-
-    factors.append(("Training intensity", Double(trainingIntensity)))
-
-    let hoursToKickoff = max(0.0, kickoffTime.timeIntervalSinceNow / 3600.0)
-    if hoursToKickoff < 6.0 {
-        factors.append(("Game is soon", 6.0 - hoursToKickoff))
-    }
-
-    let sorted = factors.sorted { $0.1 > $1.1 }
+private func topFactors(from contributions: [(String, Double)]) -> [String] {
+    let sorted = contributions.sorted { abs($0.1) > abs($1.1) }
     return sorted.prefix(3).map { $0.0 }
 }
 
-private func normalizeInt(_ value: Int, max: Int) -> Double {
-    let clamped = min(max(value, 0), max)
-    return Double(clamped) / Double(max)
+private func kickoffReadinessFactor(kickoffTime: Date) -> Double {
+    let hoursToKickoff = max(0.0, kickoffTime.timeIntervalSinceNow / 3600.0)
+
+    switch hoursToKickoff {
+    case ..<2:
+        return 0.8
+    case ..<6:
+        return 1.0
+    case ..<24:
+        return 0.6
+    default:
+        return 0.3
+    }
+}
+
+private func normalizeScale10(_ value: Int) -> Double {
+    let clamped = Swift.min(Swift.max(value, 1), 10)
+    return Double(clamped - 1) / 9.0
 }
 
 private func clamp(_ value: Double, min minValue: Double, max maxValue: Double) -> Double {

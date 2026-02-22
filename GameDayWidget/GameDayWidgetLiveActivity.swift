@@ -9,158 +9,105 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct GameDayWidgetAttributes: ActivityAttributes {
-    public struct ContentState: Codable, Hashable {
-        var homeScore: Int
-        var awayScore: Int
-        var quarter: String
-        var clock: String
-        var possession: Possession
-    }
-
-    enum Possession: String, Codable, Hashable {
-        case home
-        case away
-        case none
-    }
-
-    var homeTeam: String
-    var awayTeam: String
-    var venue: String
-}
-
 struct GameDayWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: GameDayWidgetAttributes.self) { context in
-            VStack(spacing: 8) {
-                HStack {
-                    Text(context.attributes.awayTeam)
-                        .font(.headline)
-                    Spacer()
-                    Text(context.attributes.homeTeam)
-                        .font(.headline)
-                }
-                HStack {
-                    Text("\(context.state.awayScore)")
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
-                    Text("-")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                    Text("\(context.state.homeScore)")
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
-                }
-                HStack {
-                    Text(context.state.quarter)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Text("•")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Text(context.state.clock)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                HStack {
-                    Text(context.attributes.venue)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Text(possessionText(for: context.state.possession))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .padding(.vertical, 4)
-            .activityBackgroundTint(Color(red: 0.12, green: 0.14, blue: 0.2))
-            .activitySystemActionForegroundColor(Color.white)
-
+            GameDayLiveActivityLockScreenView(context: context)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    VStack(alignment: .leading) {
-                        Text(context.attributes.awayTeam)
-                            .font(.caption)
-                        Text("\(context.state.awayScore)")
-                            .font(.title3)
-                            .fontWeight(.bold)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(context.state.readinessScore)")
+                            .font(.title3.weight(.semibold))
+                            .monospacedDigit()
+                        Text(context.state.readinessLabel)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
                     }
                 }
+
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(alignment: .trailing) {
-                        Text(context.attributes.homeTeam)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(timeBadge(for: context.attributes.kickoffTime))
                             .font(.caption)
-                        Text("\(context.state.homeScore)")
-                            .font(.title3)
-                            .fontWeight(.bold)
                     }
                 }
+
                 DynamicIslandExpandedRegion(.bottom) {
-                    HStack {
-                        Text(context.state.quarter)
-                        Text(context.state.clock)
-                        Spacer()
-                        Text(possessionText(for: context.state.possession))
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(context.state.nextAction)
+                            .font(.caption)
+                            .lineLimit(1)
+                        Text(context.state.tip)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
                     }
-                    .font(.caption)
                 }
             } compactLeading: {
-                Text(context.attributes.awayTeam.prefix(3))
+                Text("R\(context.state.readinessScore)")
+                    .monospacedDigit()
+                    .font(.caption2.weight(.semibold))
             } compactTrailing: {
-                Text("\(context.state.awayScore)-\(context.state.homeScore)")
+                Text(timeBadge(for: context.attributes.kickoffTime))
+                    .font(.caption2.weight(.semibold))
             } minimal: {
-                Text(context.state.quarter)
+                Text("\(context.state.readinessScore)")
+                    .monospacedDigit()
+                    .font(.caption2.weight(.semibold))
             }
-            .keylineTint(Color(red: 0.85, green: 0.25, blue: 0.2))
+            .keylineTint(Color.blue.opacity(0.75))
         }
     }
 }
 
-extension GameDayWidgetAttributes {
-    fileprivate static var preview: GameDayWidgetAttributes {
-        GameDayWidgetAttributes(
-            homeTeam: "SF",
-            awayTeam: "LA",
-            venue: "GameDay Stadium"
-        )
+private struct GameDayLiveActivityLockScreenView: View {
+    let context: ActivityViewContext<GameDayWidgetAttributes>
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(context.attributes.gameTitle)
+                    .font(.subheadline.weight(.medium))
+                    .lineLimit(1)
+                Spacer()
+                Text(context.attributes.kickoffTime, style: .timer)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+
+            HStack(alignment: .lastTextBaseline, spacing: 6) {
+                Text("\(context.state.readinessScore)")
+                    .font(.system(size: 34, weight: .semibold, design: .rounded))
+                    .monospacedDigit()
+                Text(context.state.readinessLabel)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+
+            Text(context.state.nextAction)
+                .font(.footnote)
+                .lineLimit(1)
+
+            Text(context.state.tip)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .padding(.vertical, 1)
+        .activityBackgroundTint(colorScheme == .dark ? Color.black.opacity(0.86) : Color.white.opacity(0.92))
+        .activitySystemActionForegroundColor(colorScheme == .dark ? .white : .black)
     }
 }
 
-extension GameDayWidgetAttributes.ContentState {
-    fileprivate static var smiley: GameDayWidgetAttributes.ContentState {
-        GameDayWidgetAttributes.ContentState(
-            homeScore: 21,
-            awayScore: 17,
-            quarter: "Q3",
-            clock: "05:42",
-            possession: .home
-        )
-     }
-     
-     fileprivate static var starEyes: GameDayWidgetAttributes.ContentState {
-         GameDayWidgetAttributes.ContentState(
-            homeScore: 24,
-            awayScore: 20,
-            quarter: "Q4",
-            clock: "01:08",
-            possession: .away
-         )
-     }
-}
-
-private func possessionText(for possession: GameDayWidgetAttributes.Possession) -> String {
-    switch possession {
-    case .home:
-        return "Home ball"
-    case .away:
-        return "Away ball"
-    case .none:
-        return "No possession"
+private func timeBadge(for kickoffTime: Date) -> String {
+    let minutes = Int(kickoffTime.timeIntervalSinceNow / 60)
+    if minutes <= 0 {
+        return "LIVE"
     }
-}
-
-#Preview("Notification", as: .content, using: GameDayWidgetAttributes.preview) {
-   GameDayWidgetLiveActivity()
-} contentStates: {
-    GameDayWidgetAttributes.ContentState.smiley
-    GameDayWidgetAttributes.ContentState.starEyes
+    if minutes < 60 {
+        return "\(minutes)m"
+    }
+    return "\(minutes / 60)h"
 }
