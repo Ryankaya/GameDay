@@ -6,14 +6,67 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3CE4C6162F4B2DFF00796182 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE4C6152F4B2DFF00796182 /* WidgetKit.framework */; };
+		3CE4C6182F4B2DFF00796182 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE4C6172F4B2DFF00796182 /* SwiftUI.framework */; };
+		3CE4C6292F4B2E0100796182 /* GameDayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3CE4C6132F4B2DFF00796182 /* GameDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CE4C6272F4B2E0100796182 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CE4C5F92F4B2CF600796182 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CE4C6122F4B2DFF00796182;
+			remoteInfo = GameDayWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3CE4C62E2F4B2E0100796182 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3CE4C6292F4B2E0100796182 /* GameDayWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3CE4C6012F4B2CF600796182 /* GameDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CE4C6132F4B2DFF00796182 /* GameDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GameDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CE4C6152F4B2DFF00796182 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		3CE4C6172F4B2DFF00796182 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		3CE4C6302F4B301800796182 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		3CE4C6312F4B301800796182 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3CE4C62A2F4B2E0100796182 /* Exceptions for "GameDayWidget" folder in "GameDayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3CE4C6122F4B2DFF00796182 /* GameDayWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3CE4C6032F4B2CF600796182 /* GameDay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = GameDay;
+			sourceTree = "<group>";
+		};
+		3CE4C6192F4B2DFF00796182 /* GameDayWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3CE4C62A2F4B2E0100796182 /* Exceptions for "GameDayWidget" folder in "GameDayWidgetExtension" target */,
+			);
+			path = GameDayWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +79,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3CE4C6102F4B2DFF00796182 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CE4C6182F4B2DFF00796182 /* SwiftUI.framework in Frameworks */,
+				3CE4C6162F4B2DFF00796182 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,7 +95,10 @@
 			isa = PBXGroup;
 			children = (
 				3CE4C6032F4B2CF600796182 /* GameDay */,
+				3CE4C6192F4B2DFF00796182 /* GameDayWidget */,
+				3CE4C6142F4B2DFF00796182 /* Frameworks */,
 				3CE4C6022F4B2CF600796182 /* Products */,
+				3CE4C62F2F4B301300796182 /* Shared */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,8 +106,27 @@
 			isa = PBXGroup;
 			children = (
 				3CE4C6012F4B2CF600796182 /* GameDay.app */,
+				3CE4C6132F4B2DFF00796182 /* GameDayWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3CE4C6142F4B2DFF00796182 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3CE4C6152F4B2DFF00796182 /* WidgetKit.framework */,
+				3CE4C6172F4B2DFF00796182 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CE4C62F2F4B301300796182 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3CE4C6302F4B301800796182 /* Models.swift */,
+				3CE4C6312F4B301800796182 /* ReadinessEngine.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,13 +139,16 @@
 				3CE4C5FD2F4B2CF600796182 /* Sources */,
 				3CE4C5FE2F4B2CF600796182 /* Frameworks */,
 				3CE4C5FF2F4B2CF600796182 /* Resources */,
+				3CE4C62E2F4B2E0100796182 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3CE4C6282F4B2E0100796182 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3CE4C6032F4B2CF600796182 /* GameDay */,
+				3CE4C62F2F4B301300796182 /* Shared */,
 			);
 			name = GameDay;
 			packageProductDependencies = (
@@ -69,6 +156,29 @@
 			productName = GameDay;
 			productReference = 3CE4C6012F4B2CF600796182 /* GameDay.app */;
 			productType = "com.apple.product-type.application";
+		};
+		3CE4C6122F4B2DFF00796182 /* GameDayWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CE4C62B2F4B2E0100796182 /* Build configuration list for PBXNativeTarget "GameDayWidgetExtension" */;
+			buildPhases = (
+				3CE4C60F2F4B2DFF00796182 /* Sources */,
+				3CE4C6102F4B2DFF00796182 /* Frameworks */,
+				3CE4C6112F4B2DFF00796182 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3CE4C6192F4B2DFF00796182 /* GameDayWidget */,
+				3CE4C62F2F4B301300796182 /* Shared */,
+			);
+			name = GameDayWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = GameDayWidgetExtension;
+			productReference = 3CE4C6132F4B2DFF00796182 /* GameDayWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +191,9 @@
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					3CE4C6002F4B2CF600796182 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					3CE4C6122F4B2DFF00796182 = {
 						CreatedOnToolsVersion = 26.3;
 					};
 				};
@@ -100,12 +213,20 @@
 			projectRoot = "";
 			targets = (
 				3CE4C6002F4B2CF600796182 /* GameDay */,
+				3CE4C6122F4B2DFF00796182 /* GameDayWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3CE4C5FF2F4B2CF600796182 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CE4C6112F4B2DFF00796182 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +243,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3CE4C60F2F4B2DFF00796182 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CE4C6282F4B2E0100796182 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CE4C6122F4B2DFF00796182 /* GameDayWidgetExtension */;
+			targetProxy = 3CE4C6272F4B2E0100796182 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3CE4C60A2F4B2CF700796182 /* Debug */ = {
@@ -310,6 +446,66 @@
 			};
 			name = Release;
 		};
+		3CE4C62C2F4B2E0100796182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3X2H33TR7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GameDayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GameDayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.htkaya.GameDay.GameDayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3CE4C62D2F4B2E0100796182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3X2H33TR7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GameDayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GameDayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.htkaya.GameDay.GameDayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +523,15 @@
 			buildConfigurations = (
 				3CE4C60D2F4B2CF700796182 /* Debug */,
 				3CE4C60E2F4B2CF700796182 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CE4C62B2F4B2E0100796182 /* Build configuration list for PBXNativeTarget "GameDayWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CE4C62C2F4B2E0100796182 /* Debug */,
+				3CE4C62D2F4B2E0100796182 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
